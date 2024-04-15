@@ -2,6 +2,11 @@
 #include <cstdlib>
 #include <ctime>
 using namespace std;
+
+int operations_count = 0;
+int MaxinArr(<vector> arr, int n) {
+  
+}
 // count the operation
 
 //get the max value in vector
