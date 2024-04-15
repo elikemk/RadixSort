@@ -5,8 +5,16 @@ using namespace std;
 
 int operations_count = 0;
 int MaxinArr(<vector> arr, int n) {
-  
+  int maxVal = arr[0];
+  for (int i = 0; i < arr.size(); i++){
+    if (maxVal < arr[i]){
+      maxVal = arr[i];
+    }
+  }
+  return maxVal;
 }
+  
+
 // count the operation
 
 //get the max value in vector
