@@ -5,7 +5,6 @@
 using namespace std;
 
 // 1. count the operation
-
 //2. get the max value in vector
 //3. get the small unit and create a output array
 // 4. apply radix sort
@@ -47,28 +46,23 @@ void SmallestUnit(int arr[], int n, int exp){
     }
 }
 
-
 void raidxsort(int arr[], int n){
  int m = MaxinArr(arr, n);
   for (int exp = 1; m / exp > 0; exp *= 10)
         SmallestUnit(arr, n, exp);
 // this functions calls the smallest unit and then sorts based on the LSU
 }
-
 void print(int arr[], int n) {
     for (int i = 0; i < n; i++)
         cout << arr[i] << " ";
     cout << endl;
 }
-
 void genRandomarray(int arr[], int n) {
     for (int i = 0; i < n; i++)
         arr[i] = rand() % 1000;  //from 0 - 999 
 }
-
 int main(){
   srand(time(0));
-
   int n = 64;
   int arr[n];
   genRandomarray(arr, n);
@@ -78,7 +72,6 @@ int main(){
   cout << "\n Radix sort array: ";
   print(arr , n);
   cout << "Total Number of operations " << operations_count << endl;
-
   int arr128 = 128;
   int number[arr128];
   genRandomarray(number, arr128);
@@ -90,21 +83,9 @@ int main(){
   cout << "\n Radix sort array: ";
   print(number , arr128);
   cout << "Total Number of operations " << operations_count << endl;
- 
- 
-  
 
 return 0;
   
 }
 
 
-// count the operation
-
-//get the max value in vector
-
-// apply radix sort
-// generate a random array
-
-
-// create a randomarr[64] and randomarrr[128] 
