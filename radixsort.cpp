@@ -3,6 +3,17 @@
 #include <ctime>
 using namespace std;
 
+
+  
+
+// 1. count the operation
+
+//2. get the max value in vector
+//3. get the small unit and create a output array
+// 4. apply radix sort
+//5. generate a random array
+// 6. create a randomarr[64] and randomarrr[128] 
+
 int operations_count = 0;
 // interger value that counts the number of operation the sort will do
 // for a radix sort, you must first get the max value in the array, THEN sort the numbers based on the unit place, least significant bit example 802 = 2, 10 = 0
@@ -22,6 +33,7 @@ void SmallestUnit(int arr, int n, int exp){
   int arry[10] = {0}
   for (int i = 0; i < n; i++){ // this is the output array 
   count[(arr[i] / exp) % 10]++;
+    operations_count++;
 }
   for (i = 1; i < 10; i++){
     count[i] += count[i-1] // build the least significant unit arry 
@@ -29,7 +41,7 @@ void SmallestUnit(int arr, int n, int exp){
   for (i = n - 1; i >= 0; i--) {
         output[count[(arr[i] / exp) % 10] - 1] = arr[i];
         count[(arr[i] / exp) % 10]--;
-        operationCount++; 
+        operations_count++; 
     }
 // and then copy the output of the smallest unit array into the orginal array 
     for (i = 0; i < n; i++){
@@ -37,11 +49,23 @@ void SmallestUnit(int arr, int n, int exp){
     }
 }
 
+
 void raidxsort(int arr[], int n){
  int m = getMax(arr, n);
   for (int exp = 1; m / exp > 0; exp *= 10)
-        countSort(arr, n, exp);
+        SmallestUnit(arr, n, exp);
+// this functions calls the smallest unit and then sorts based on the LSU
+}
 
+void print(int arr[], int n) {
+    for (int i = 0; i < n; i++)
+        cout << arr[i] << " ";
+    cout << endl;
+}
+
+void generateRandomArray(int arr[], int n) {
+    for (int i = 0; i < n; i++)
+        arr[i] = rand() % 1000;  //from 0 - 999 
 }
 
 int main(){
