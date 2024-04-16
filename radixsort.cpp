@@ -3,58 +3,45 @@
 #include <ctime>
 using namespace std;
 
+int operationCount = 0;  // To count the number of operations
 
-  
-
-// 1. count the operation
-
-//2. get the max value in vector
-//3. get the small unit and create a output array
-// 4. apply radix sort
-//5. generate a random array
-// 6. create a randomarr[64] and randomarrr[128] 
-
-int operations_count = 0;
-// interger value that counts the number of operation the sort will do
-// for a radix sort, you must first get the max value in the array, THEN sort the numbers based on the unit place, least significant bit example 802 = 2, 10 = 0
-int MaxinArr(int arr[], int n) {
-  int maxVal = arr[0];
-  for (int i = 0; i < arr.size(); i++){
-    if (maxVal < arr[i]){
-      maxVal = arr[i];
+int getMax(int arr[], int n) {
+    int mx = arr[0];
+    for (int i = 1; i < n; i++) {
+        operationCount++;  // Counting comparisons
+        if (arr[i] > mx)
+            mx = arr[i];
     }
-  }
-  return maxVal;
+    return mx;
 }
-void SmallestUnit(int arr, int n, int exp){
-//source: Geeks4Geeks
-  int output[n];
-  int i, count[10] = {0}
-  int arry[10] = {0}
-  for (int i = 0; i < n; i++){ // this is the output array 
-  count[(arr[i] / exp) % 10]++;
-    operations_count++;
-}
-  for (i = 1; i < 10; i++){
-    count[i] += count[i-1] // build the least significant unit arry 
-  }
-  for (i = n - 1; i >= 0; i--) {
+
+void countSort(int arr[], int n, int exp) {
+    int output[n]; 
+    int i, count[10] = {0};
+  
+    for (i = 0; i < n; i++) {
+        count[(arr[i] / exp) % 10]++;
+        operationCount++;  // Counting operations
+    }
+  
+    for (i = 1; i < 10; i++)
+        count[i] += count[i - 1];
+  
+    for (i = n - 1; i >= 0; i--) {
         output[count[(arr[i] / exp) % 10] - 1] = arr[i];
         count[(arr[i] / exp) % 10]--;
-        operations_count++; 
+        operationCount++;  // Counting operations (acts as swaps)
     }
-// and then copy the output of the smallest unit array into the orginal array 
-    for (i = 0; i < n; i++){
+  
+    for (i = 0; i < n; i++)
         arr[i] = output[i];
-    }
 }
 
-
-void raidxsort(int arr[], int n){
- int m = getMax(arr, n);
-  for (int exp = 1; m / exp > 0; exp *= 10)
-        SmallestUnit(arr, n, exp);
-// this functions calls the smallest unit and then sorts based on the LSU
+void radixsort(int arr[], int n) {
+    int m = getMax(arr, n);
+  
+    for (int exp = 1; m / exp > 0; exp *= 10)
+        countSort(arr, n, exp);
 }
 
 void print(int arr[], int n) {
@@ -65,54 +52,30 @@ void print(int arr[], int n) {
 
 void generateRandomArray(int arr[], int n) {
     for (int i = 0; i < n; i++)
-        arr[i] = rand() % 1000;  //from 0 - 999 
+        arr[i] = rand() % 1000;  // Generate numbers between 0 and 999
 }
 
-int main(){
-  srand(time(0));
+int main() {
+    srand(time(0));  // Initialize random seed
 
-  int n = 64
-  int arr[n];
-  genRandomarray(arr, n);
-  cout << "Array before preforming radix sort ";
-  print(arr, n)
-  radixsort(arr, n)
-  cout << "\n Radix sort array: ";
-  print(arr , n);
-  cout << "Total Number of operations " << operations_count << endl;
+    int n = 64;
+    int arr[n];
+    generateRandomArray(arr, n);
 
-  int nn = 128
-  int arrI[nn];
-  genRandomarray(arrI, nn);
-  cout << "Array before preforming radix sort ";
-  print(arrI, nn)
-  radixsort(arr, n)
+    radixsort(arr, n);
+    cout << "Sorted array: ";
+    print(arr, n);
+    cout << "Total operations (comparisons+swaps): " << operationCount << endl;
 
-  cout << "\n Radix sort array: ";
-  print(arrI , nn);
-  cout << "Total Number of operations " << operations_count << endl;
- 
- 
-  
+    int n2 = 128;
+    int arr2[n2];
+    generateRandomArray(arr2, n2);
+    operationCount = 0;  // Reset operation count
 
-return 0;
-  
+    radixsort(arr2, n2);
+    cout << "Sorted array: ";
+    print(arr2, n2);
+    cout << "Total operations (comparisons+swaps): " << operationCount << endl;
+
+    return 0;
 }
-
-
-
-
-  
-
-// count the operation
-
-//get the max value in vector
-
-// apply radix sort
-// generate a random array
-
-
-// create a randomarr[64] and randomarrr[128] 
-
-
-
